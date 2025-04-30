@@ -20,8 +20,14 @@ public class UploadResumeController {
     private static final String UPLOAD_DIR = "uploads";
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadResume(@RequestParam("file") MultipartFile file) throws NullPointerException {
+    public ResponseEntity<String> uploadResume(@RequestParam("file") MultipartFile file) {
+
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        if (fileName == null || fileName.isBlank()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Invalid file: filename is missing.");
+        }
         String fileNameInLowerCase = fileName.toLowerCase();
         if(!fileNameInLowerCase.endsWith(".pdf") && !fileNameInLowerCase.endsWith(".doc") && !fileNameInLowerCase.endsWith(".docx")) {
             return ResponseEntity.badRequest().body("Invalid file format, only pdf and word documents are supported");
