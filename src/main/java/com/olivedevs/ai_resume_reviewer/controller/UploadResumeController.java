@@ -22,12 +22,13 @@ public class UploadResumeController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadResume(@RequestParam("file") MultipartFile file) {
 
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        if (fileName == null || fileName.isBlank()) {
+        if (file == null || file.isEmpty()) {
             return ResponseEntity
                     .badRequest()
                     .body("Invalid file: filename is missing.");
         }
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
         String fileNameInLowerCase = fileName.toLowerCase();
         if(!fileNameInLowerCase.endsWith(".pdf") && !fileNameInLowerCase.endsWith(".doc") && !fileNameInLowerCase.endsWith(".docx")) {
             return ResponseEntity.badRequest().body("Invalid file format, only pdf and word documents are supported");
