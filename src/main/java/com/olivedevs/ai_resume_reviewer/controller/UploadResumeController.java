@@ -27,6 +27,12 @@ public class UploadResumeController {
                     .badRequest()
                     .body("Invalid file: filename is missing.");
         }
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename == null || originalFilename.isBlank()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Invalid file: filename is missing.");
+        }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         String fileNameInLowerCase = fileName.toLowerCase();
