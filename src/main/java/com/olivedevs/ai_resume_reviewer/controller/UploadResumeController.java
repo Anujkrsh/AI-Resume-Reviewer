@@ -25,7 +25,7 @@ public class UploadResumeController {
         if (file == null || file.isEmpty()) {
             return ResponseEntity
                     .badRequest()
-                    .body("Invalid file: filename is missing.");
+                    .body("Invalid file: file is missing or empty.");
         }
         String originalFilename = file.getOriginalFilename();
         if (originalFilename == null || originalFilename.isBlank()) {
