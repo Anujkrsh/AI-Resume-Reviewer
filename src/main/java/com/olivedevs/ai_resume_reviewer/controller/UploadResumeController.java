@@ -21,17 +21,11 @@ public class UploadResumeController {
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadResume(@RequestParam("file") MultipartFile file) {
-
-        if (file == null || file.isEmpty()) {
+        
+        if (file == null || file.isEmpty() || file.getOriginalFilename() == null || file.getOriginalFilename().isBlank()) {
             return ResponseEntity
                     .badRequest()
-                    .body("Invalid file: file is missing or empty.");
-        }
-        String originalFilename = file.getOriginalFilename();
-        if (originalFilename == null || originalFilename.isBlank()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("Invalid file: filename is missing.");
+                    .body("Invalid file: file is missing, empty, or filename is invalid.");
         }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
