@@ -20,7 +20,7 @@ public class UploadResumeController {
     private static final String UPLOAD_DIR = "uploads";
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadResume(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<String> uploadResume(@RequestParam("file") MultipartFile file) throws NullPointerException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String fileNameInLowerCase = fileName.toLowerCase();
         if(!fileNameInLowerCase.endsWith(".pdf") && !fileNameInLowerCase.endsWith(".doc") && !fileNameInLowerCase.endsWith(".docx")) {
